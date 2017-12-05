@@ -3,46 +3,64 @@
 #undef max
 #include <limits>
 
-CameraSelection::CameraSelection(QWidget *parent)
-  : QDialog(parent, Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint)
-  , mSelectedCameraIndex{std::numeric_limits<EdsUInt32>::max()} {
-  ui.setupUi(this);
+#include "ui_cameraselection.h"
 
-  resetCamerasTableWidget();
-  ui.camerasTableWidget->resizeColumnsToContents();
-  ui.camerasTableWidget->resizeRowsToContents();
+#include "eos/deviceinfo.hpp"
+
+CameraSelection::CameraSelection(QWidget *parent)
+  : QDialog{parent, Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint}
+  , mUi{std::make_unique<Ui::CameraSelectionClass>()}
+  , mSelectedCameraIndex{std::numeric_limits<std::size_t>::max()}
+  , mDeviceList{} {
+  mUi->setupUi(this);
+}
+
+CameraSelection::~CameraSelection() {
 }
 
 void CameraSelection::showEvent(QShowEvent *event) {
-  /*for (auto *item : ui.camerasTableWidget->selectedItems()) {
-    item->setSelected(false);
-  }
-  ui.okButton->setEnabled(false);*/
+  refreshView();
+
+  QDialog::showEvent(event);
 }
 
-void CameraSelection::camerasListUpdate(const std::vector<EOS::DeviceInfo> &camerasList) {
-  std::vector<EOS::DeviceInfo> cameraList2;
-  cameraList2.push_back({0, "dsasdsa", "ewqeqweqweqw", 2, 321});
-  cameraList2.push_back({1, "dsasdsa323", "ewqeqweqwe21121qw", 3, 32441});
-  cameraList2.push_back({2, "dsasdsa333", "ewqeqweqw44421eqw", 4, 32551});
-  resetCamerasTableWidget();
-  for (std::size_t i = 0; i < cameraList2.size(); i ++) {
-    ui.camerasTableWidget->insertRow(i);
-    ui.camerasTableWidget->setItem(i, 0, new QTableWidgetItem(QString::number(cameraList2[i].index)));
-    ui.camerasTableWidget->setItem(i, 1, new QTableWidgetItem(cameraList2[i].description.c_str()));
-    ui.camerasTableWidget->setItem(i, 2, new QTableWidgetItem(cameraList2[i].portName.c_str()));
-    ui.camerasTableWidget->setItem(i, 3, new QTableWidgetItem(QString::number(cameraList2[i].subType)));
-    ui.camerasTableWidget->setItem(i, 4, new QTableWidgetItem(QString::number(cameraList2[i].reserved)));
-  }
-  ui.camerasTableWidget->resizeColumnsToContents();
-  ui.camerasTableWidget->resizeRowsToContents();
-}
-
-EdsUInt32 CameraSelection::getSelectedCameraIndex() {
+std::size_t CameraSelection::getSelectedCameraIndex() {
   return mSelectedCameraIndex;
 }
 
+void CameraSelection::deviceListChanged(const std::vector<EOS::DeviceInfo>& deviceList) {
+  if (mDeviceList == deviceList) {
+    return;
+  }
+
+  mDeviceList = deviceList;
+
+  if (isVisible()) {
+    refreshView();
+  }
+}
+
+void CameraSelection::refreshView() {
+  mSelectedCameraIndex = std::numeric_limits<std::size_t>::max();
+  mUi->okButton->setEnabled(false);
+
+  mUi->camerasListWidget->clear();
+  resetCamerasTableWidget();
+
+  for (std::size_t i = 0; i < mDeviceList.size(); i ++) {
+    mUi->camerasTableWidget->insertRow(i);
+    mUi->camerasTableWidget->setItem(i, 0, new QTableWidgetItem(QString::number(mDeviceList[i].index)));
+    mUi->camerasTableWidget->setItem(i, 1, new QTableWidgetItem(mDeviceList[i].description.c_str()));
+    mUi->camerasTableWidget->setItem(i, 2, new QTableWidgetItem(mDeviceList[i].portName.c_str()));
+    mUi->camerasTableWidget->setItem(i, 3, new QTableWidgetItem(QString::number(mDeviceList[i].subtype)));
+    mUi->camerasTableWidget->setItem(i, 4, new QTableWidgetItem(QString::number(mDeviceList[i].reserved)));
+  }
+
+  mUi->camerasTableWidget->resizeColumnsToContents();
+  mUi->camerasTableWidget->resizeRowsToContents();
+}
+
 void CameraSelection::resetCamerasTableWidget() {
-  ui.camerasTableWidget->clear();
-  ui.camerasTableWidget->setHorizontalHeaderLabels({"Index", "Description", "Port name", "Sub type", "Reserved"});
+  mUi->camerasTableWidget->clear();
+  mUi->camerasTableWidget->setHorizontalHeaderLabels({"Index", "Description", "Port name", "Sub type", "Reserved"});
 }

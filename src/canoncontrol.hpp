@@ -1,27 +1,42 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 
 #include <QtWidgets/QMainWindow>
 
-#include "ui_canoncontrol.h"
-#include "cameraselection.hpp"
-#include "eos/cameracontroller.hpp"
-#include "eos/deviceinfo.hpp"
+#include "eos/deviceconnectionstatuslistener.hpp"
 
-class CanonControl : public QMainWindow {
+namespace Ui {
+  class CanonControlClass;
+}
+
+class CameraSelection;
+
+namespace EOS {
+  class SDK;
+  class Device;
+}
+
+class CanonControl : public QMainWindow
+                   , public std::enable_shared_from_this<CanonControl>
+                   , public EOS::DeviceConnectionStatusListener {
   Q_OBJECT
 
 public:
   CanonControl(QWidget *parent = Q_NULLPTR);
-  void showEvent(QShowEvent *event) override;
+  ~CanonControl() override;
+  bool init();
+
+public: // EOS::DeviceConnectionStatusListener
+  void deviceConnected(std::shared_ptr<EOS::Device> &device) override;
+  void deviceDisconnected(std::shared_ptr<EOS::Device> &device) override;
 
 private:
-  Ui::CanonControlClass ui;
-  CameraSelection mCameraSelection;
-  EOS::CameraController mCameraController;
+  const std::unique_ptr<Ui::CanonControlClass> mUi;
+  std::shared_ptr<CameraSelection> mCameraSelection;
+  std::shared_ptr<EOS::SDK> mSDK;
 
 public slots:
   void connectionButtonClicked();
-  void camerasListUpdate(const std::vector<EOS::DeviceInfo> &camerasList);
 };

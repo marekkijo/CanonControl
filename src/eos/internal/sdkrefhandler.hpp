@@ -1,6 +1,6 @@
 #pragma once
 
-#include <atomic>
+#include <cstddef>
 
 namespace EOS {
   namespace Internal {
@@ -11,8 +11,8 @@ namespace EOS {
       bool isInitialized();
 
     private:
-      static std::atomic_size_t mInstanceCounter;
-      static std::atomic_bool mInitialized;
+      static std::size_t mInstanceCounter;
+      static bool mInitialized;
     };
   }
 }

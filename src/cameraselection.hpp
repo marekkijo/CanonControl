@@ -1,30 +1,39 @@
 #pragma once
 
+#include <memory>
 #include <vector>
+#include <cstddef>
 
 #include <QtWidgets/QDialog>
 
-#include <edsdk/EDSDK.h>
-#include <edsdk/EDSDKTypes.h>
-#include <edsdk/EDSDKErrors.h>
+#include "eos/devicelistchangedlistener.hpp"
 
-#include "ui_cameraselection.h"
-#include "eos/deviceinfo.hpp"
+namespace Ui {
+  class CameraSelectionClass;
+}
 
-class CameraSelection : public QDialog {
+namespace EOS {
+  class DeviceInfo;
+}
+
+class CameraSelection : public QDialog
+                      , public EOS::DeviceListChangedListener {
   Q_OBJECT
 
 public:
   CameraSelection(QWidget *parent = Q_NULLPTR);
+  ~CameraSelection() override;
   void showEvent(QShowEvent *event) override;
-  EdsUInt32 getSelectedCameraIndex();
+  std::size_t getSelectedCameraIndex();
+
+public: // EOS::DeviceListChangedListener
+  void deviceListChanged(const std::vector<EOS::DeviceInfo> &deviceList) override;
 
 private:
-  Ui::CameraSelectionClass ui;
-  EdsUInt32 mSelectedCameraIndex;
+  const std::unique_ptr<Ui::CameraSelectionClass> mUi;
+  std::size_t mSelectedCameraIndex;
+  std::vector<EOS::DeviceInfo> mDeviceList;
 
+  void refreshView();
   void resetCamerasTableWidget();
-
-public slots:
-  void camerasListUpdate(const std::vector<EOS::DeviceInfo> &camerasList);
 };

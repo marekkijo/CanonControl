@@ -1,32 +1,34 @@
-#include "controllerimpl.hpp"
+#include "sdkimpl.hpp"
 
-#include "../exceptions.hpp"
 #include "sdkrefhandler.hpp"
+#include "../exceptions.hpp"
+#include "../deviceconnectionstatuslistener.hpp"
+#include "../devicelistchangedlistener.hpp"
 
 namespace EOS {
   namespace Internal {
-    ControllerImpl::ControllerImpl()
+    SDKImpl::SDKImpl()
     : mSDKRefHandler(std::make_unique<SDKRefHandler>()) {
         if (!mSDKRefHandler->isInitialized()) {
           throw InitializationException();
         }
     }
 
-    ControllerImpl::~ControllerImpl() {
+    SDKImpl::~SDKImpl() {
     }/*
 
-    ControllerImpl::~ControllerImpl() {
+    SDKImpl::~SDKImpl() {
       if (isInitialized()) {
         verifyCall(EdsTerminateSDK());
         mSdkInitialized = false;
       }
     }
 
-    bool ControllerImpl::isInitialized() {
+    bool SDKImpl::isInitialized() {
       return mSdkInitialized;
     }
 
-    bool ControllerImpl::startCameraListChangeListener() {
+    bool SDKImpl::startCameraListChangeListener() {
       if (!verifyCall(EdsSetCameraAddedHandler(CameraController::CameraAddedHandlerCallback, this))) {
         return false;
       }
@@ -36,26 +38,34 @@ namespace EOS {
       return true;
     }
 
-    std::string ControllerImpl::getErrorDescription() {
+    std::string SDKImpl::getErrorDescription() {
       return errorToString(getLastError());
     }
 
-    EdsError ControllerImpl::CameraAddedHandler() {
+    EdsError SDKImpl::CameraAddedHandler() {
       updateCameraList();
       return EDS_ERR_OK;
     }
 
-    EdsError ControllerImpl::CameraAddedHandlerCallback(EdsVoid *inContext) {
+    EdsError SDKImpl::CameraAddedHandlerCallback(EdsVoid *inContext) {
       CameraController *cc = static_cast<CameraController *>(inContext);
       return cc->CameraAddedHandler();
     }
 
-    void ControllerImpl::updateCameraList() {
+    void SDKImpl::updateCameraList() {
       auto newCameraList = std::make_shared<CameraList>();
       if (!mCameraList || (mCameraList->getCamerasInfo() != newCameraList->getCamerasInfo())) {
         mCameraList = newCameraList;
         emit camerasListChanged(mCameraList->getCamerasInfo());
       }
     }*/
+    void SDKImpl::registerDeviceListChangedListener(std::weak_ptr<DeviceListChangedListener> deviceListChangedListener) {
+    }
+
+    void SDKImpl::registerDeviceConnectionStatusListener(std::weak_ptr<DeviceConnectionStatusListener> deviceConnectionStatusListener) {
+    }
+
+    void SDKImpl::refreshNotify() {
+    }
   }
 }

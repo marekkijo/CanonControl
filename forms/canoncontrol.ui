@@ -183,9 +183,6 @@
    <header>isospinbox.hpp</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="canoncontrol.qrc"/>
- </resources>
  <connections>
   <connection>
    <sender>isoSpinBox</sender>

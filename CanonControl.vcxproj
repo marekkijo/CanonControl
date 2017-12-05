@@ -113,14 +113,15 @@ xcopy /r /y $(QTDIR)\bin\Qt5Gui.dll $(OutDir)</Command>
     <ClInclude Include="GeneratedFiles\ui_canoncontrol.h" />
     <ClInclude Include="src\converters.hpp" />
     <ClInclude Include="src\eos\cameralist.hpp" />
-    <ClInclude Include="src\eos\controller.hpp" />
+    <ClInclude Include="src\eos\sdk.hpp" />
+    <ClInclude Include="src\eos\deviceconnectionstatuslistener.hpp" />
     <ClInclude Include="src\eos\deviceinfo.hpp" />
+    <ClInclude Include="src\eos\devicelistchangedlistener.hpp" />
     <ClInclude Include="src\eos\enums.hpp" />
     <ClInclude Include="src\eos\exceptions.hpp" />
-    <ClInclude Include="src\eos\internal\controllerimpl.hpp" />
+    <ClInclude Include="src\eos\internal\sdkimpl.hpp" />
     <ClInclude Include="src\eos\internal\sdkrefhandler.hpp" />
     <ClInclude Include="src\eos\internal\utilities.hpp" />
-    <ClInclude Include="src\eos\listeners.hpp" />
     <CustomBuild Include="src\eos\cameracontroller.hpp">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing cameracontroller.hpp...</Message>
@@ -193,10 +194,10 @@ xcopy /r /y $(QTDIR)\bin\Qt5Gui.dll $(OutDir)</Command>
     <ClCompile Include="src\converters.cpp" />
     <ClCompile Include="src\eos\cameracontroller.cpp" />
     <ClCompile Include="src\eos\cameralist.cpp" />
-    <ClCompile Include="src\eos\controller.cpp" />
+    <ClCompile Include="src\eos\sdk.cpp" />
     <ClCompile Include="src\eos\deviceinfo.cpp" />
     <ClCompile Include="src\eos\exceptions.cpp" />
-    <ClCompile Include="src\eos\internal\controllerimpl.cpp" />
+    <ClCompile Include="src\eos\internal\sdkimpl.cpp" />
     <ClCompile Include="src\eos\internal\sdkrefhandler.cpp" />
     <ClCompile Include="src\eos\internal\utilities.cpp" />
     <ClCompile Include="src\isospinbox.cpp" />

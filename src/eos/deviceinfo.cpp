@@ -6,6 +6,6 @@ namespace EOS {
       lhs.index == rhs.index &&
       lhs.portName == rhs.portName &&
       lhs.description == rhs.description &&
-      lhs.subType == rhs.subType;
+      lhs.subtype == rhs.subtype;
   }
 }

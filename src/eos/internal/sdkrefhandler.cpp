@@ -27,7 +27,7 @@ namespace EOS {
       return mInitialized;
     }
 
-    std::atomic_size_t SDKRefHandler::mInstanceCounter{0};
-    std::atomic_bool SDKRefHandler::mInitialized{false};
+    std::size_t SDKRefHandler::mInstanceCounter{0};
+    bool SDKRefHandler::mInitialized{false};
   }
 }

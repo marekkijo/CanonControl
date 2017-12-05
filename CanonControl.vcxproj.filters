@@ -80,9 +80,6 @@
     <ClInclude Include="src\eos\cameralist.hpp">
       <Filter>Sources\eos</Filter>
     </ClInclude>
-    <ClInclude Include="src\eos\controller.hpp">
-      <Filter>Sources\eos</Filter>
-    </ClInclude>
     <ClInclude Include="src\eos\deviceinfo.hpp">
       <Filter>Sources\eos</Filter>
     </ClInclude>
@@ -92,16 +89,22 @@
     <ClInclude Include="src\eos\exceptions.hpp">
       <Filter>Sources\eos</Filter>
     </ClInclude>
-    <ClInclude Include="src\eos\listeners.hpp">
-      <Filter>Sources\eos</Filter>
-    </ClInclude>
-    <ClInclude Include="src\eos\internal\controllerimpl.hpp">
-      <Filter>Sources\eos\internal</Filter>
-    </ClInclude>
     <ClInclude Include="src\eos\internal\sdkrefhandler.hpp">
       <Filter>Sources\eos\internal</Filter>
     </ClInclude>
     <ClInclude Include="src\eos\internal\utilities.hpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\devicelistchangedlistener.hpp">
+      <Filter>Sources\eos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\deviceconnectionstatuslistener.hpp">
+      <Filter>Sources\eos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\sdk.hpp">
+      <Filter>Sources\eos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\internal\sdkimpl.hpp">
       <Filter>Sources\eos\internal</Filter>
     </ClInclude>
   </ItemGroup>
@@ -151,22 +154,22 @@
     <ClCompile Include="src\eos\cameralist.cpp">
       <Filter>Sources\eos</Filter>
     </ClCompile>
-    <ClCompile Include="src\eos\controller.cpp">
-      <Filter>Sources\eos</Filter>
-    </ClCompile>
     <ClCompile Include="src\eos\deviceinfo.cpp">
       <Filter>Sources\eos</Filter>
     </ClCompile>
     <ClCompile Include="src\eos\exceptions.cpp">
       <Filter>Sources\eos</Filter>
     </ClCompile>
-    <ClCompile Include="src\eos\internal\controllerimpl.cpp">
-      <Filter>Sources\eos\internal</Filter>
-    </ClCompile>
     <ClCompile Include="src\eos\internal\sdkrefhandler.cpp">
       <Filter>Sources\eos\internal</Filter>
     </ClCompile>
     <ClCompile Include="src\eos\internal\utilities.cpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\sdk.cpp">
+      <Filter>Sources\eos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\internal\sdkimpl.cpp">
       <Filter>Sources\eos\internal</Filter>
     </ClCompile>
   </ItemGroup>
