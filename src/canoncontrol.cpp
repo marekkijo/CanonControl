@@ -23,7 +23,7 @@ void CanonControl::showEvent(QShowEvent *event) {
   QMainWindow::showEvent(event);
 }
 
-void CanonControl::camerasListUpdate(const std::vector<EOS::CameraInfo>& camerasList) {
+void CanonControl::camerasListUpdate(const std::vector<EOS::DeviceInfo>& camerasList) {
 }
 
 void CanonControl::connectionButtonClicked() {

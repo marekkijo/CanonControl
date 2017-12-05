@@ -6,19 +6,19 @@
 #include <edsdk/EDSDKTypes.h>
 #include <edsdk/EDSDKErrors.h>
 
-#include "camerainfo.hpp"
+#include "deviceinfo.hpp"
 
 namespace EOS {
   class CameraList {
   public:
     CameraList();
     ~CameraList();
-    const std::vector<CameraInfo> &getCamerasInfo();
+    const std::vector<DeviceInfo> &getCamerasInfo();
 
   private:
     EdsCameraListRef mCameraListRef;
     EdsUInt32 mCameraCount;
-    std::vector<CameraInfo> mCamerasInfo;
+    std::vector<DeviceInfo> mCamerasInfo;
 
     bool init();
     bool terminate();

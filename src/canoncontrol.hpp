@@ -7,7 +7,7 @@
 #include "ui_canoncontrol.h"
 #include "cameraselection.hpp"
 #include "eos/cameracontroller.hpp"
-#include "eos/camerainfo.hpp"
+#include "eos/deviceinfo.hpp"
 
 class CanonControl : public QMainWindow {
   Q_OBJECT
@@ -23,5 +23,5 @@ private:
 
 public slots:
   void connectionButtonClicked();
-  void camerasListUpdate(const std::vector<EOS::CameraInfo> &camerasList);
+  void camerasListUpdate(const std::vector<EOS::DeviceInfo> &camerasList);
 };

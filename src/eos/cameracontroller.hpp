@@ -32,7 +32,7 @@ namespace EOS {
     bool mSdkInitialized;
 
   signals:
-    void camerasListChanged(const std::vector<CameraInfo> &camerasList);
+    void camerasListChanged(const std::vector<DeviceInfo> &camerasList);
 
   public slots:
     void updateCameraList();

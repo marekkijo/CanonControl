@@ -20,8 +20,8 @@ void CameraSelection::showEvent(QShowEvent *event) {
   ui.okButton->setEnabled(false);*/
 }
 
-void CameraSelection::camerasListUpdate(const std::vector<EOS::CameraInfo> &camerasList) {
-  std::vector<EOS::CameraInfo> cameraList2;
+void CameraSelection::camerasListUpdate(const std::vector<EOS::DeviceInfo> &camerasList) {
+  std::vector<EOS::DeviceInfo> cameraList2;
   cameraList2.push_back({0, "dsasdsa", "ewqeqweqweqw", 2, 321});
   cameraList2.push_back({1, "dsasdsa323", "ewqeqweqwe21121qw", 3, 32441});
   cameraList2.push_back({2, "dsasdsa333", "ewqeqweqw44421eqw", 4, 32551});

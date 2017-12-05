@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "utilities.hpp"
+#include "internal/utilities.hpp"
 
 namespace EOS {
   CameraList::CameraList()
@@ -16,16 +16,16 @@ namespace EOS {
     terminate();
   }
 
-  const std::vector<CameraInfo>& CameraList::getCamerasInfo() {
+  const std::vector<DeviceInfo>& CameraList::getCamerasInfo() {
     return mCamerasInfo;
   }
 
   bool CameraList::init() {
-    if (!verifyCall(EdsGetCameraList(&mCameraListRef))) {
+    if (!Internal::verifyCall(EdsGetCameraList(&mCameraListRef))) {
       return false;
     }
 
-    if (!verifyCall(EdsGetChildCount(mCameraListRef, &mCameraCount))) {
+    if (!Internal::verifyCall(EdsGetChildCount(mCameraListRef, &mCameraCount))) {
       terminate();
       return false;
     }
@@ -44,7 +44,7 @@ namespace EOS {
     mCameraCount = 0;
     mCamerasInfo.clear();
 
-    return verifyCall(EdsRelease(cameraListRefToTerminate));
+    return Internal::verifyCall(EdsRelease(cameraListRefToTerminate));
   }
 
   bool CameraList::fillCameraList() {
@@ -52,19 +52,19 @@ namespace EOS {
     EdsDeviceInfo deviceInfo;
 
     for (EdsUInt32 i = 0; i < mCameraCount; i ++) {
-      if (!verifyCall(EdsGetChildAtIndex(mCameraListRef, i, &cameraRef))) {
+      if (!Internal::verifyCall(EdsGetChildAtIndex(mCameraListRef, i, &cameraRef))) {
         return false;
       }
 
-      if (!verifyCall(EdsGetDeviceInfo(cameraRef, &deviceInfo))) {
+      if (!Internal::verifyCall(EdsGetDeviceInfo(cameraRef, &deviceInfo))) {
         EdsRelease(cameraRef);
         return false;
       }
 
-      CameraInfo cameraInfo{i, deviceInfo.szPortName, deviceInfo.szDeviceDescription, deviceInfo.deviceSubType, deviceInfo.reserved};
+      DeviceInfo cameraInfo{i, deviceInfo.szPortName, deviceInfo.szDeviceDescription, deviceInfo.deviceSubType, deviceInfo.reserved};
       mCamerasInfo.push_back(cameraInfo);
 
-      if (!verifyCall(EdsRelease(cameraRef))) {
+      if (!Internal::verifyCall(EdsRelease(cameraRef))) {
         return false;
       }
       cameraRef = nullptr;

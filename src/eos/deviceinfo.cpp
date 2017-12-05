@@ -1,7 +1,7 @@
-#include "camerainfo.hpp"
+#include "deviceinfo.hpp"
 
 namespace EOS {
-  bool operator==(const CameraInfo& lhs, const CameraInfo& rhs) {
+  bool operator==(const DeviceInfo& lhs, const DeviceInfo& rhs) {
     return
       lhs.index == rhs.index &&
       lhs.portName == rhs.portName &&

@@ -1,76 +1,113 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
-    </Filter>
-    <Filter Include="Form Files">
-      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
-      <Extensions>ui</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
-    </Filter>
     <Filter Include="Generated Files">
       <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
       <Extensions>moc;h;cpp</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
-    <Filter Include="Header Files\eos">
-      <UniqueIdentifier>{76b5a09b-0385-461a-9241-36e9dba3c661}</UniqueIdentifier>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{aa22075e-3f20-4d8d-9dd0-fa441cf76a50}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Source Files\eos">
-      <UniqueIdentifier>{c67d6e7a-f6e2-47c7-9fc2-5c6847645b79}</UniqueIdentifier>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;rc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
     </Filter>
-    <Filter Include="Resource Files\data">
+    <Filter Include="Resources\data">
       <UniqueIdentifier>{98f398f9-985e-407e-b534-0ae256f889f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Forms">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Sources\eos">
+      <UniqueIdentifier>{85226451-9e4d-4558-b5e0-ef5e1440925c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\eos\internal">
+      <UniqueIdentifier>{8351af27-d518-4e88-ac25-722d1cc11bd3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="canoncontrol.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="isospinbox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="converters.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_isospinbox.cpp">
+    <Image Include="res\data\canon.ico">
+      <Filter>Resources\data</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\data\canon.xcf">
+      <Filter>Resources\data</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\canoncontrol.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="forms\cameraselection.ui">
+      <Filter>Forms</Filter>
+    </CustomBuild>
+    <CustomBuild Include="forms\canoncontrol.ui">
+      <Filter>Forms</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\cameraselection.hpp">
+      <Filter>Sources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\canoncontrol.hpp">
+      <Filter>Sources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\isospinbox.hpp">
+      <Filter>Sources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\eos\cameracontroller.hpp">
+      <Filter>Sources\eos</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles\ui_cameraselection.h">
       <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_canoncontrol.cpp">
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_canoncontrol.h">
       <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="eos\cameracontroller.cpp">
-      <Filter>Source Files\eos</Filter>
-    </ClCompile>
-    <ClCompile Include="eos\utilities.cpp">
-      <Filter>Source Files\eos</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_cameracontroller.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_cameracontroller.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cameraselection.cpp">
-      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\converters.hpp">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource.hpp">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\cameralist.hpp">
+      <Filter>Sources\eos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\controller.hpp">
+      <Filter>Sources\eos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\deviceinfo.hpp">
+      <Filter>Sources\eos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\enums.hpp">
+      <Filter>Sources\eos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\exceptions.hpp">
+      <Filter>Sources\eos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\listeners.hpp">
+      <Filter>Sources\eos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\internal\controllerimpl.hpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\internal\sdkrefhandler.hpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\internal\utilities.hpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\cameraselection.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_cameraselection.cpp">
       <Filter>Generated Files</Filter>
@@ -78,67 +115,59 @@
     <ClCompile Include="GeneratedFiles\Release\moc_cameraselection.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="eos\cameralist.cpp">
-      <Filter>Source Files\eos</Filter>
+    <ClCompile Include="src\canoncontrol.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="eos\camerainfo.cpp">
-      <Filter>Source Files\eos</Filter>
+    <ClCompile Include="GeneratedFiles\Debug\moc_canoncontrol.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="canoncontrol.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="isospinbox.hpp">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="canoncontrol.hpp">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="eos\cameracontroller.hpp">
-      <Filter>Header Files\eos</Filter>
-    </CustomBuild>
-    <CustomBuild Include="cameraselection.hpp">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="cameraselection.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="eos\cameralist.hpp">
-      <Filter>Header Files\eos</Filter>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GeneratedFiles\ui_canoncontrol.h">
+    <ClCompile Include="GeneratedFiles\Release\moc_canoncontrol.cpp">
       <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="converters.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="eos\enums.hpp">
-      <Filter>Header Files\eos</Filter>
-    </ClInclude>
-    <ClInclude Include="eos\utilities.hpp">
-      <Filter>Header Files\eos</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_cameraselection.h">
+    </ClCompile>
+    <ClCompile Include="src\converters.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\isospinbox.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_isospinbox.cpp">
       <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="eos\camerainfo.hpp">
-      <Filter>Header Files\eos</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="canoncontrol.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="data\canon.ico">
-      <Filter>Resource Files\data</Filter>
-    </Image>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_isospinbox.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\cameracontroller.cpp">
+      <Filter>Sources\eos</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_cameracontroller.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_cameracontroller.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\cameralist.cpp">
+      <Filter>Sources\eos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\controller.cpp">
+      <Filter>Sources\eos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\deviceinfo.cpp">
+      <Filter>Sources\eos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\exceptions.cpp">
+      <Filter>Sources\eos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\internal\controllerimpl.cpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\internal\sdkrefhandler.cpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\internal\utilities.cpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

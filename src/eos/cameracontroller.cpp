@@ -1,16 +1,16 @@
 #include "cameracontroller.hpp"
 
-#include "utilities.hpp"
+#include "internal/utilities.hpp"
 
 namespace EOS {
   CameraController::CameraController(QObject *parent)
     : QObject(parent)
-    , mSdkInitialized{verifyCall(EdsInitializeSDK())} {
+    , mSdkInitialized{Internal::verifyCall(EdsInitializeSDK())} {
   }
 
   CameraController::~CameraController() {
     if (isInitialized()) {
-      verifyCall(EdsTerminateSDK());
+      Internal::verifyCall(EdsTerminateSDK());
       mSdkInitialized = false;
     }
   }
@@ -20,7 +20,7 @@ namespace EOS {
   }
 
   bool CameraController::startCameraListChangeListener() {
-    if (!verifyCall(EdsSetCameraAddedHandler(CameraController::CameraAddedHandlerCallback, this))) {
+    if (!Internal::verifyCall(EdsSetCameraAddedHandler(CameraController::CameraAddedHandlerCallback, this))) {
       return false;
     }
     mCameraListTimer.setInterval(3000);
@@ -30,7 +30,7 @@ namespace EOS {
   }
 
   std::string CameraController::getErrorDescription() {
-    return errorToString(getLastError());
+    return Internal::errorToString(Internal::getLastError());
   }
 
   EdsError CameraController::CameraAddedHandler() {
