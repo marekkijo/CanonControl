@@ -29,8 +29,8 @@ namespace Converters {
       return kValueToString[value];
     }
 
-    int stringToValue(std::string _string) {
-      auto it = std::find(kValueToString.begin(), kValueToString.end(), _string);
+    int stringToValue(std::string str) {
+      auto it = std::find(kValueToString.begin(), kValueToString.end(), str);
       if (it == kValueToString.end())
         throw std::invalid_argument("Converters::ISO::stringToValue()");
       return std::distance(kValueToString.begin(), it);
@@ -43,8 +43,8 @@ namespace Converters {
       return static_cast<EOS::ISOValue>(value);
     }
 
-    int enumToValue(EOS::ISOValue _enum) {
-      return static_cast<int>(_enum);
+    int enumToValue(EOS::ISOValue iso_value) {
+      return static_cast<int>(iso_value);
     }
   }
 }

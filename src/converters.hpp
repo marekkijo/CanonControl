@@ -11,8 +11,8 @@ namespace Converters {
     int minValue();
     int maxValue();
     std::string valueToString(int value);
-    int stringToValue(std::string _string);
+    int stringToValue(std::string str);
     EOS::ISOValue valueToEnum(int value);
-    int enumToValue(EOS::ISOValue _enum);
+    int enumToValue(EOS::ISOValue iso_value);
   }
 }

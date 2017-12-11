@@ -76,9 +76,7 @@ namespace EOS {
       }
 
       if (mCameraList->getCamerasInfo() != newCameraList->getCamerasInfo()) {
-        // TODO: verify camera disconnected
-        // if yes notifyCameraConnectionStatusListeners
-        // else move camera connectrion to newCameraList 
+        // TODO: verify camera disconnected. yes - notifyCameraConnectionStatusListeners / no - move camera connectrion to newCameraList.
 
         mCameraList = newCameraList;
         notifyCameraListChangedListeners(mCameraList->getCamerasInfo());
