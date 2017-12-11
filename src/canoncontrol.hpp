@@ -29,14 +29,17 @@ public:
   bool init();
 
 public: // EOS::CameraConnectionStatusListener
-  void cameraConnected(std::shared_ptr<EOS::Camera> &camera) override;
-  void cameraDisconnected(std::shared_ptr<EOS::Camera> &camera) override;
+  void cameraConnected(const std::shared_ptr<EOS::Camera> &camera) override;
+  void cameraDisconnected(const std::shared_ptr<EOS::Camera> &camera) override;
 
 private:
   const std::unique_ptr<Ui::CanonControlClass> mUi;
   const std::unique_ptr<QTimer> mRefreshTimer;
   std::unique_ptr<CameraSelection> mCameraSelection;
   std::shared_ptr<EOS::SDK> mSDK;
+  std::shared_ptr<EOS::Camera> mConnectedCamera;
+
+  void cameraConnectionUiUpdate();
 
 public slots:
   void refreshNotify();

@@ -9,14 +9,15 @@
 #include "../cameraconnectionstatuslistener.hpp"
 #include "../cameralistchangedlistener.hpp"
 #include "../camerainfo.hpp"
+#include "../camera.hpp"
 
 namespace EOS {
   namespace Internal {
     SDKImpl::SDKImpl()
-    : mSDKRefHandler{std::make_unique<SDKRefHandler>()}
-    , mCameraList{nullptr}
-    , mCameraListChangedListeners{}
-    , mCameraConnectionStatusListeners{} {
+      : mSDKRefHandler{std::make_unique<SDKRefHandler>()}
+      , mCameraList{nullptr}
+      , mCameraListChangedListeners{}
+      , mCameraConnectionStatusListeners{} {
       if (!mSDKRefHandler->isInitialized()) {
         throw InitializationException();
       }
@@ -58,28 +59,57 @@ namespace EOS {
     }
 
     void SDKImpl::connectCamera(size_t index) {
+      if (mCameraList->getConnectedCamera()) {
+        notifyListenersCameraDisconnected(mCameraList->getConnectedCamera());
+      }
+
+      notifyListenersCameraConnected(mCameraList->connectCamera(index));
     }
 
-    void SDKImpl::notifyCameraListChangedListeners(const std::vector<CameraInfo> &cameraList) {
+    void SDKImpl::disconnectCamera(const std::shared_ptr<Camera> &camera) {
+      if (mCameraList->getConnectedCamera() == camera) {
+        mCameraList->disconnectCamera(camera);
+        mCameraList.reset();
+        notifyListenersCameraDisconnected(camera);
+      } else {
+        notifyListenersCameraConnected(camera);
+      }
+    }
+
+    void SDKImpl::notifyListenersCameraListChanged(const std::vector<CameraInfo> &cameraList) {
       for (const auto &listener : mCameraListChangedListeners) {
         listener->cameraListChanged(cameraList);
       }
     }
 
+    void SDKImpl::notifyListenersCameraConnected(const std::shared_ptr<Camera> &camera) {
+      for (const auto &listener : mCameraConnectionStatusListeners) {
+        listener->cameraConnected(camera);
+      }
+    }
+
+    void SDKImpl::notifyListenersCameraDisconnected(const std::shared_ptr<Camera> &camera) {
+      for (const auto &listener : mCameraConnectionStatusListeners) {
+        listener->cameraDisconnected(camera);
+      }
+    }
+
     void SDKImpl::cameraAddedHandler() {
-      std::shared_ptr<CameraList> newCameraList{std::make_shared<CameraList>()};
+      const std::shared_ptr<CameraList> newCameraList{std::make_shared<CameraList>()};
       if (!mCameraList){
         mCameraList = newCameraList;
         if (!mCameraList->getCamerasInfo().empty()){
-          notifyCameraListChangedListeners(mCameraList->getCamerasInfo());
+          notifyListenersCameraListChanged(mCameraList->getCamerasInfo());
         }
       }
 
       if (mCameraList->getCamerasInfo() != newCameraList->getCamerasInfo()) {
-        // TODO: verify camera disconnected. yes - notifyCameraConnectionStatusListeners / no - move camera connectrion to newCameraList.
+        if (!newCameraList->reassignConnectedCamera(mCameraList)) {
+          notifyListenersCameraDisconnected(mCameraList->getConnectedCamera());
+        }
 
         mCameraList = newCameraList;
-        notifyCameraListChangedListeners(mCameraList->getCamerasInfo());
+        notifyListenersCameraListChanged(mCameraList->getCamerasInfo());
       }
     }
 

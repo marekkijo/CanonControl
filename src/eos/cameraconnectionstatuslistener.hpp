@@ -8,7 +8,7 @@ namespace EOS {
   class CameraConnectionStatusListener {
   public:
     virtual ~CameraConnectionStatusListener() = default;
-    virtual void cameraConnected(std::shared_ptr<Camera> &camera) = 0;
-    virtual void cameraDisconnected(std::shared_ptr<Camera> &camera) = 0;
+    virtual void cameraConnected(const std::shared_ptr<Camera> &camera) = 0;
+    virtual void cameraDisconnected(const std::shared_ptr<Camera> &camera) = 0;
   };
 }

@@ -8,12 +8,12 @@ namespace EOS {
   namespace Internal {
     CameraListRefHandler::CameraListRefHandler()
     : mCameraListRef{nullptr}
-    , mInitialized{Internal::verifyCall(EdsGetCameraList(&mCameraListRef))} {
+    , mInitialized{verifyCall(EdsGetCameraList(&mCameraListRef))} {
     }
 
     CameraListRefHandler::~CameraListRefHandler() {
       if (mInitialized) {
-        Internal::verifyCall(EdsRelease(mCameraListRef));
+        verifyCall(EdsRelease(mCameraListRef));
         mCameraListRef = nullptr;
         mInitialized = false;
       }

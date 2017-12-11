@@ -10,13 +10,13 @@ namespace EOS {
       mInstanceCounter ++;
 
       if (mInstanceCounter == 1) {
-        mInitialized = Internal::verifyCall(EdsInitializeSDK());
+        mInitialized = verifyCall(EdsInitializeSDK());
       }
     }
 
     SDKRefHandler::~SDKRefHandler() {
       if (mInstanceCounter == 1 && mInitialized) {
-        Internal::verifyCall(EdsTerminateSDK());
+        verifyCall(EdsTerminateSDK());
         mInitialized = false;
       }
 

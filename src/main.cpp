@@ -4,17 +4,24 @@
 
 #include "canoncontrol.hpp"
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    
-    auto w_ptr{std::make_shared<CanonControl>()};
+int qtMain(int argc, char *argv[]);
 
-    if (!w_ptr->init()) {
-      return 1;
-    }
+int main(int argc, char *argv[]) {
+  int result = qtMain(argc, argv);
+  system("pause");
+  return result;
+}
 
-    w_ptr->show();
+int qtMain(int argc, char *argv[]) {
+  QApplication a(argc, argv);
 
-    return a.exec();
+  auto w_ptr{std::make_shared<CanonControl>()};
+
+  if (!w_ptr->init()) {
+    return 1;
+  }
+
+  w_ptr->show();
+
+  return a.exec();
 }

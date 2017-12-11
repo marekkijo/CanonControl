@@ -41,4 +41,8 @@ namespace EOS {
   void SDK::connectCamera(size_t index) {
     pImpl->connectCamera(index);
   }
+
+  void SDK::disconnectCamera(const std::shared_ptr<EOS::Camera> &camera) {
+    pImpl->disconnectCamera(camera);
+  }
 }

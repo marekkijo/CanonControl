@@ -6,6 +6,8 @@
 
 #include "eos/exceptions.hpp"
 #include "eos/sdk.hpp"
+#include "eos/camera.hpp"
+#include "eos/camerainfo.hpp"
 
 #include "cameraselection.hpp"
 
@@ -14,9 +16,10 @@ CanonControl::CanonControl(QWidget *parent)
   , mUi{std::make_unique<Ui::CanonControlClass>()}
   , mRefreshTimer{std::make_unique<QTimer>()}
   , mCameraSelection{nullptr}
-  , mSDK{nullptr} {
+  , mSDK{nullptr}
+  , mConnectedCamera{nullptr} {
   mUi->setupUi(this);
-  mUi->statusBar->showMessage("Disconnected");
+  cameraConnectionUiUpdate();
 }
 
 CanonControl::~CanonControl() {
@@ -43,10 +46,30 @@ bool CanonControl::init() {
   return true;
 }
 
-void CanonControl::cameraConnected(std::shared_ptr<EOS::Camera>& camera) {
+void CanonControl::cameraConnected(const std::shared_ptr<EOS::Camera> &camera) {
+  mConnectedCamera = camera;
+  cameraConnectionUiUpdate();
+  mUi->connectPushButton->setEnabled(true);
 }
 
-void CanonControl::cameraDisconnected(std::shared_ptr<EOS::Camera>& camera) {
+void CanonControl::cameraDisconnected(const std::shared_ptr<EOS::Camera> &camera) {
+  if (mConnectedCamera != camera) {
+    return;
+  }
+
+  mConnectedCamera.reset();
+  cameraConnectionUiUpdate();
+  mUi->connectPushButton->setEnabled(true);
+}
+
+void CanonControl::cameraConnectionUiUpdate() {
+  if (mConnectedCamera) {
+    mUi->connectPushButton->setText(QString(tr("&Disconnect")));
+    mUi->statusBar->showMessage(tr("Connected: ") + QString::fromStdString(mConnectedCamera->getCameraInfo().description));
+  } else {
+    mUi->connectPushButton->setText(QString(tr("&Connect")));
+    mUi->statusBar->showMessage(tr("Disconnected"));
+  }
 }
 
 void CanonControl::refreshNotify() {
@@ -54,7 +77,10 @@ void CanonControl::refreshNotify() {
 }
 
 void CanonControl::connectionButtonClicked() {
-  if (mCameraSelection->exec()) {
+  if (mConnectedCamera) {
+    mUi->connectPushButton->setEnabled(false);
+    mSDK->disconnectCamera(mConnectedCamera);
+  } else if (mCameraSelection->exec()) {
     mUi->connectPushButton->setEnabled(false);
     mSDK->connectCamera(mCameraSelection->getSelectedCameraIndex());
   }

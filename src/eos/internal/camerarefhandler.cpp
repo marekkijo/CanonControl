@@ -10,12 +10,12 @@ namespace EOS {
     CameraRefHandler::CameraRefHandler(const std::shared_ptr<CameraListRefHandler> &cameraListRefHandler, std::size_t index)
     : mCameraListRefHandler{cameraListRefHandler}
     , mCameraRef{nullptr}
-    , mInitialized{Internal::verifyCall(EdsGetChildAtIndex(mCameraListRefHandler->getCameraListRef(), index, &mCameraRef))} {
+    , mInitialized{verifyCall(EdsGetChildAtIndex(mCameraListRefHandler->getCameraListRef(), index, &mCameraRef))} {
     }
 
     CameraRefHandler::~CameraRefHandler() {
       if (mInitialized) {
-        Internal::verifyCall(EdsRelease(mCameraRef));
+        verifyCall(EdsRelease(mCameraRef));
         mCameraRef = nullptr;
         mInitialized = false;
       }

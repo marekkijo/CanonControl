@@ -2,9 +2,11 @@
 
 #include <memory>
 #include <vector>
+#include <cstddef>
 
 namespace EOS {
   class CameraInfo;
+  class Camera;
 
   namespace Internal {
     class CameraListRefHandler;
@@ -13,11 +15,16 @@ namespace EOS {
     public:
       CameraList();
       ~CameraList();
-      const std::vector<CameraInfo> &getCamerasInfo();
+      const std::vector<CameraInfo> &getCamerasInfo() const;
+      const std::shared_ptr<Camera> &getConnectedCamera() const;
+      const std::shared_ptr<Camera> &connectCamera(std::size_t index);
+      void disconnectCamera(const std::shared_ptr<Camera> &connectedCamera);
+      bool reassignConnectedCamera(const std::shared_ptr<CameraList> &cameraList);
 
     private:
       std::shared_ptr<CameraListRefHandler> mCameraListRefHandler;
       std::vector<CameraInfo> mCamerasInfo;
+      std::shared_ptr<Camera> mConnectedCamera;
 
       void init();
     };

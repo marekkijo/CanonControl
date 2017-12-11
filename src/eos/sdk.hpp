@@ -8,6 +8,7 @@ namespace EOS {
   }
   class CameraListChangedListener;
   class CameraConnectionStatusListener;
+  class Camera;
 
   class SDK {
   public:
@@ -21,6 +22,7 @@ namespace EOS {
     void setCameraAddedHandler();
     void clearCameraAddedHandler();
     void connectCamera(size_t index);
+    void disconnectCamera(const std::shared_ptr<EOS::Camera> &camera);
 
   private:
     const std::unique_ptr<Internal::SDKImpl> pImpl;
