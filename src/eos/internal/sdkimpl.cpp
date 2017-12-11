@@ -1,71 +1,94 @@
 #include "sdkimpl.hpp"
 
+#include <edsdk/EDSDK.h>
+
 #include "sdkrefhandler.hpp"
+#include "utilities.hpp"
+#include "cameralist.hpp"
 #include "../exceptions.hpp"
-#include "../deviceconnectionstatuslistener.hpp"
-#include "../devicelistchangedlistener.hpp"
+#include "../cameraconnectionstatuslistener.hpp"
+#include "../cameralistchangedlistener.hpp"
+#include "../camerainfo.hpp"
 
 namespace EOS {
   namespace Internal {
     SDKImpl::SDKImpl()
-    : mSDKRefHandler(std::make_unique<SDKRefHandler>()) {
-        if (!mSDKRefHandler->isInitialized()) {
-          throw InitializationException();
-        }
+    : mSDKRefHandler{std::make_unique<SDKRefHandler>()}
+    , mCameraList{nullptr}
+    , mCameraListChangedListeners{}
+    , mCameraConnectionStatusListeners{} {
+      if (!mSDKRefHandler->isInitialized()) {
+        throw InitializationException();
+      }
     }
 
     SDKImpl::~SDKImpl() {
-    }/*
-
-    SDKImpl::~SDKImpl() {
-      if (isInitialized()) {
-        verifyCall(EdsTerminateSDK());
-        mSdkInitialized = false;
-      }
     }
 
-    bool SDKImpl::isInitialized() {
-      return mSdkInitialized;
+    void SDKImpl::registerCameraListChangedListener(CameraListChangedListener *cameraListChangedListener) {
+      mCameraListChangedListeners.insert(cameraListChangedListener);
     }
 
-    bool SDKImpl::startCameraListChangeListener() {
-      if (!verifyCall(EdsSetCameraAddedHandler(CameraController::CameraAddedHandlerCallback, this))) {
-        return false;
-      }
-      mCameraListTimer.setInterval(3000);
-      connect(&mCameraListTimer, SIGNAL(timeout()), this, SLOT(updateCameraList()));
-      mCameraListTimer.start();
-      return true;
+    void SDKImpl::unregisterCameraListChangedListener(CameraListChangedListener *cameraListChangedListener) {
+      mCameraListChangedListeners.erase(cameraListChangedListener);
     }
 
-    std::string SDKImpl::getErrorDescription() {
-      return errorToString(getLastError());
+    void SDKImpl::registerCameraConnectionStatusListener(CameraConnectionStatusListener *cameraConnectionStatusListener) {
+      mCameraConnectionStatusListeners.insert(cameraConnectionStatusListener);
     }
 
-    EdsError SDKImpl::CameraAddedHandler() {
-      updateCameraList();
-      return EDS_ERR_OK;
-    }
-
-    EdsError SDKImpl::CameraAddedHandlerCallback(EdsVoid *inContext) {
-      CameraController *cc = static_cast<CameraController *>(inContext);
-      return cc->CameraAddedHandler();
-    }
-
-    void SDKImpl::updateCameraList() {
-      auto newCameraList = std::make_shared<CameraList>();
-      if (!mCameraList || (mCameraList->getCamerasInfo() != newCameraList->getCamerasInfo())) {
-        mCameraList = newCameraList;
-        emit camerasListChanged(mCameraList->getCamerasInfo());
-      }
-    }*/
-    void SDKImpl::registerDeviceListChangedListener(std::weak_ptr<DeviceListChangedListener> deviceListChangedListener) {
-    }
-
-    void SDKImpl::registerDeviceConnectionStatusListener(std::weak_ptr<DeviceConnectionStatusListener> deviceConnectionStatusListener) {
+    void SDKImpl::unregisterCameraConnectionStatusListener(CameraConnectionStatusListener *cameraConnectionStatusListener) {
+      mCameraConnectionStatusListeners.erase(cameraConnectionStatusListener);
     }
 
     void SDKImpl::refreshNotify() {
+      cameraAddedHandler();
+    }
+
+    void SDKImpl::setCameraAddedHandler() {
+      if (!verifyCall(EdsSetCameraAddedHandler(SDKImpl::cameraAddedHandler, this))) {
+        throw InitializationException();
+      }
+    }
+
+    void SDKImpl::clearCameraAddedHandler() {
+      if (!verifyCall(EdsSetCameraAddedHandler(nullptr, nullptr))) {
+        throw InitializationException();
+      }
+    }
+
+    void SDKImpl::connectCamera(size_t index) {
+    }
+
+    void SDKImpl::notifyCameraListChangedListeners(const std::vector<CameraInfo> &cameraList) {
+      for (const auto &listener : mCameraListChangedListeners) {
+        listener->cameraListChanged(cameraList);
+      }
+    }
+
+    void SDKImpl::cameraAddedHandler() {
+      std::shared_ptr<CameraList> newCameraList{std::make_shared<CameraList>()};
+      if (!mCameraList){
+        mCameraList = newCameraList;
+        if (!mCameraList->getCamerasInfo().empty()){
+          notifyCameraListChangedListeners(mCameraList->getCamerasInfo());
+        }
+      }
+
+      if (mCameraList->getCamerasInfo() != newCameraList->getCamerasInfo()) {
+        // TODO: verify camera disconnected
+        // if yes notifyCameraConnectionStatusListeners
+        // else move camera connectrion to newCameraList 
+
+        mCameraList = newCameraList;
+        notifyCameraListChangedListeners(mCameraList->getCamerasInfo());
+      }
+    }
+
+    EdsError SDKImpl::cameraAddedHandler(EdsVoid *inContext) {
+      SDKImpl *impl = static_cast<SDKImpl *>(inContext);
+      impl->cameraAddedHandler();
+      return EDS_ERR_OK;
     }
   }
 }

@@ -2,6 +2,8 @@
 
 #include <array>
 
+#include "eos/enums.hpp"
+
 namespace Converters {
   namespace ISO {
     const static int kMinValue{0};

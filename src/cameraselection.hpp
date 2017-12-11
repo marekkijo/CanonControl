@@ -2,38 +2,46 @@
 
 #include <memory>
 #include <vector>
-#include <cstddef>
 
 #include <QtWidgets/QDialog>
 
-#include "eos/devicelistchangedlistener.hpp"
+#include "eos/cameralistchangedlistener.hpp"
 
 namespace Ui {
   class CameraSelectionClass;
 }
 
 namespace EOS {
-  class DeviceInfo;
+  class SDK;
+  class CameraInfo;
 }
 
 class CameraSelection : public QDialog
-                      , public EOS::DeviceListChangedListener {
+                      , public EOS::CameraListChangedListener {
   Q_OBJECT
 
 public:
-  CameraSelection(QWidget *parent = Q_NULLPTR);
+  CameraSelection(const std::shared_ptr<EOS::SDK> &sdk, QWidget *parent = nullptr);
   ~CameraSelection() override;
-  void showEvent(QShowEvent *event) override;
-  std::size_t getSelectedCameraIndex();
+  std::size_t getSelectedCameraIndex() const;
 
-public: // EOS::DeviceListChangedListener
-  void deviceListChanged(const std::vector<EOS::DeviceInfo> &deviceList) override;
+public:
+  static const std::size_t kInvalidIndex;
+
+public: // QDialog
+  void showEvent(QShowEvent *event) override;
+
+public: // EOS::CameraListChangedListener
+  void cameraListChanged(const std::vector<EOS::CameraInfo> &cameraList) override;
 
 private:
   const std::unique_ptr<Ui::CameraSelectionClass> mUi;
-  std::size_t mSelectedCameraIndex;
-  std::vector<EOS::DeviceInfo> mDeviceList;
+  std::shared_ptr<EOS::SDK> mSDK;
+  std::vector<EOS::CameraInfo> mCameraList;
 
   void refreshView();
-  void resetCamerasTableWidget();
+
+public slots:
+  void itemSelectionChanged();
+  void itemDoubleClicked();
 };

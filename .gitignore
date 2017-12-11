@@ -1,0 +1,33 @@
+# Windows
+Thumbs.db
+
+# Visual Studio local files
+*.opensdf
+*.sdf
+*.suo
+*.v12.suo
+*.VC.opendb
+*.VC.db
+*.vcxproj.*
+!*.vcxproj.filters
+*.aps
+*.log
+
+# Visual Studio performance session files
+*.psess
+*.vsp
+
+# Intel VTune Amplifier XE report directory
+My\ Amplifier\ XE\ Results*/
+
+# Temporary build directories and files
+[dD]ebug/
+[rR]elease/
+GeneratedFiles/
+*.ipch
+
+# Qt
+*-build/
+build-*-[dD]ebug/
+build-*-[rR]elease/
+*.pro.*

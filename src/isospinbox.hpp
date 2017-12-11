@@ -6,6 +6,6 @@ class IsoSpinBox : public QSpinBox {
   Q_OBJECT
 
 public:
-  IsoSpinBox(QWidget *parent = Q_NULLPTR);
+  explicit IsoSpinBox(QWidget *parent = nullptr);
   QString IsoSpinBox::textFromValue(int value) const override;
 };

@@ -4,7 +4,7 @@
 #include <string>
 
 namespace EOS {
-  struct DeviceInfo {
+  struct CameraInfo {
     std::size_t index;
     std::string portName;
     std::string description;
@@ -12,5 +12,5 @@ namespace EOS {
     std::uint32_t reserved;
   };
 
-  bool operator==(const DeviceInfo& lhs, const DeviceInfo& rhs);
+  bool operator==(const CameraInfo& lhs, const CameraInfo& rhs);
 }

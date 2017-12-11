@@ -60,9 +60,6 @@
     <CustomBuild Include="src\isospinbox.hpp">
       <Filter>Sources</Filter>
     </CustomBuild>
-    <CustomBuild Include="src\eos\cameracontroller.hpp">
-      <Filter>Sources\eos</Filter>
-    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_cameraselection.h">
@@ -77,10 +74,7 @@
     <ClInclude Include="src\resource.hpp">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="src\eos\cameralist.hpp">
-      <Filter>Sources\eos</Filter>
-    </ClInclude>
-    <ClInclude Include="src\eos\deviceinfo.hpp">
+    <ClInclude Include="src\eos\camerainfo.hpp">
       <Filter>Sources\eos</Filter>
     </ClInclude>
     <ClInclude Include="src\eos\enums.hpp">
@@ -95,16 +89,31 @@
     <ClInclude Include="src\eos\internal\utilities.hpp">
       <Filter>Sources\eos\internal</Filter>
     </ClInclude>
-    <ClInclude Include="src\eos\devicelistchangedlistener.hpp">
+    <ClInclude Include="src\eos\cameralistchangedlistener.hpp">
       <Filter>Sources\eos</Filter>
     </ClInclude>
-    <ClInclude Include="src\eos\deviceconnectionstatuslistener.hpp">
+    <ClInclude Include="src\eos\cameraconnectionstatuslistener.hpp">
       <Filter>Sources\eos</Filter>
     </ClInclude>
     <ClInclude Include="src\eos\sdk.hpp">
       <Filter>Sources\eos</Filter>
     </ClInclude>
     <ClInclude Include="src\eos\internal\sdkimpl.hpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\internal\cameralistrefhandler.hpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\internal\cameralist.hpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\internal\camerarefhandler.hpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\camera.hpp">
+      <Filter>Sources\eos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eos\internal\cameraimpl.hpp">
       <Filter>Sources\eos\internal</Filter>
     </ClInclude>
   </ItemGroup>
@@ -142,19 +151,7 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\eos\cameracontroller.cpp">
-      <Filter>Sources\eos</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_cameracontroller.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_cameracontroller.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\eos\cameralist.cpp">
-      <Filter>Sources\eos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\eos\deviceinfo.cpp">
+    <ClCompile Include="src\eos\camerainfo.cpp">
       <Filter>Sources\eos</Filter>
     </ClCompile>
     <ClCompile Include="src\eos\exceptions.cpp">
@@ -170,6 +167,18 @@
       <Filter>Sources\eos</Filter>
     </ClCompile>
     <ClCompile Include="src\eos\internal\sdkimpl.cpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\internal\cameralistrefhandler.cpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\internal\cameralist.cpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\internal\camerarefhandler.cpp">
+      <Filter>Sources\eos\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eos\internal\cameraimpl.cpp">
       <Filter>Sources\eos\internal</Filter>
     </ClCompile>
   </ItemGroup>

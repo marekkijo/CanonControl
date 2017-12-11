@@ -5,38 +5,40 @@
 
 #include <QtWidgets/QMainWindow>
 
-#include "eos/deviceconnectionstatuslistener.hpp"
+#include "eos/cameraconnectionstatuslistener.hpp"
 
 namespace Ui {
   class CanonControlClass;
 }
 
+class QTimer;
 class CameraSelection;
 
 namespace EOS {
   class SDK;
-  class Device;
+  class Camera;
 }
 
 class CanonControl : public QMainWindow
-                   , public std::enable_shared_from_this<CanonControl>
-                   , public EOS::DeviceConnectionStatusListener {
+                   , public EOS::CameraConnectionStatusListener {
   Q_OBJECT
 
 public:
-  CanonControl(QWidget *parent = Q_NULLPTR);
+  explicit CanonControl(QWidget *parent = nullptr);
   ~CanonControl() override;
   bool init();
 
-public: // EOS::DeviceConnectionStatusListener
-  void deviceConnected(std::shared_ptr<EOS::Device> &device) override;
-  void deviceDisconnected(std::shared_ptr<EOS::Device> &device) override;
+public: // EOS::CameraConnectionStatusListener
+  void cameraConnected(std::shared_ptr<EOS::Camera> &camera) override;
+  void cameraDisconnected(std::shared_ptr<EOS::Camera> &camera) override;
 
 private:
   const std::unique_ptr<Ui::CanonControlClass> mUi;
-  std::shared_ptr<CameraSelection> mCameraSelection;
+  const std::unique_ptr<QTimer> mRefreshTimer;
+  std::unique_ptr<CameraSelection> mCameraSelection;
   std::shared_ptr<EOS::SDK> mSDK;
 
 public slots:
+  void refreshNotify();
   void connectionButtonClicked();
 };

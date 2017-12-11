@@ -2,15 +2,17 @@
 
 #include "ui_canoncontrol.h"
 #include <QtWidgets/QMessageBox>
+#include <QTimer>
+
+#include "eos/exceptions.hpp"
+#include "eos/sdk.hpp"
 
 #include "cameraselection.hpp"
-
-#include "eos/sdk.hpp"
-#include "eos/exceptions.hpp"
 
 CanonControl::CanonControl(QWidget *parent)
   : QMainWindow(parent)
   , mUi{std::make_unique<Ui::CanonControlClass>()}
+  , mRefreshTimer{std::make_unique<QTimer>()}
   , mCameraSelection{nullptr}
   , mSDK{nullptr} {
   mUi->setupUi(this);
@@ -18,11 +20,10 @@ CanonControl::CanonControl(QWidget *parent)
 }
 
 CanonControl::~CanonControl() {
+  mSDK->unregisterCameraConnectionStatusListener(this);
 }
 
 bool CanonControl::init() {
-  mCameraSelection = std::make_shared<CameraSelection>(this);
-
   try {
     mSDK = std::make_unique<EOS::SDK>();
   } catch (const EOS::InitializationException &exception) {
@@ -30,20 +31,31 @@ bool CanonControl::init() {
     return false;
   }
 
-  mSDK->registerDeviceConnectionStatusListener(std::weak_ptr<EOS::DeviceConnectionStatusListener>{shared_from_this()});
-  mSDK->registerDeviceListChangedListener(std::weak_ptr<EOS::DeviceListChangedListener>{mCameraSelection});
+  mCameraSelection = std::make_unique<CameraSelection>(mSDK, this);
+
+  mSDK->registerCameraConnectionStatusListener(this);
+
+  connect(mRefreshTimer.get(), SIGNAL(timeout()), this, SLOT(refreshNotify()));
+  mRefreshTimer->start(3000);
+
+  mSDK->setCameraAddedHandler();
 
   return true;
 }
 
-void CanonControl::deviceConnected(std::shared_ptr<EOS::Device>& device) {
+void CanonControl::cameraConnected(std::shared_ptr<EOS::Camera>& camera) {
 }
 
-void CanonControl::deviceDisconnected(std::shared_ptr<EOS::Device>& device) {
+void CanonControl::cameraDisconnected(std::shared_ptr<EOS::Camera>& camera) {
+}
+
+void CanonControl::refreshNotify() {
+  mSDK->refreshNotify();
 }
 
 void CanonControl::connectionButtonClicked() {
   if (mCameraSelection->exec()) {
-    QMessageBox::critical(this, QString("Critical error"), QString::number(mCameraSelection->getSelectedCameraIndex()));
+    mUi->connectPushButton->setEnabled(false);
+    mSDK->connectCamera(mCameraSelection->getSelectedCameraIndex());
   }
 }

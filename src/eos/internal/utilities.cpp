@@ -1,6 +1,6 @@
 #include "utilities.hpp"
 
-#include <exception>
+#include <edsdk/EDSDKErrors.h>
 
 namespace EOS {
   namespace Internal {

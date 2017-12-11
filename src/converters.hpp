@@ -2,7 +2,9 @@
 
 #include <string>
 
-#include "eos/enums.hpp"
+namespace EOS {
+  enum class ISOValue;
+}
 
 namespace Converters {
   namespace ISO {

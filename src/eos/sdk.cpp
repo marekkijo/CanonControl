@@ -10,15 +10,35 @@ namespace EOS {
   SDK::~SDK() {
   }
 
-  void SDK::registerDeviceListChangedListener(std::weak_ptr<DeviceListChangedListener> deviceListChangedListener) {
-    pImpl->registerDeviceListChangedListener(deviceListChangedListener);
+  void SDK::registerCameraListChangedListener(CameraListChangedListener *cameraListChangedListener) {
+    pImpl->registerCameraListChangedListener(cameraListChangedListener);
   }
 
-  void SDK::registerDeviceConnectionStatusListener(std::weak_ptr<DeviceConnectionStatusListener> deviceConnectionStatusListener) {
-    pImpl->registerDeviceConnectionStatusListener(deviceConnectionStatusListener);
+  void SDK::unregisterCameraListChangedListener(CameraListChangedListener *cameraListChangedListener) {
+    pImpl->registerCameraListChangedListener(cameraListChangedListener);
+  }
+
+  void SDK::registerCameraConnectionStatusListener(CameraConnectionStatusListener *cameraConnectionStatusListener) {
+    pImpl->registerCameraConnectionStatusListener(cameraConnectionStatusListener);
+  }
+
+  void SDK::unregisterCameraConnectionStatusListener(CameraConnectionStatusListener *cameraConnectionStatusListener) {
+    pImpl->registerCameraConnectionStatusListener(cameraConnectionStatusListener);
   }
 
   void SDK::refreshNotify() {
     pImpl->refreshNotify();
+  }
+
+  void SDK::setCameraAddedHandler() {
+    pImpl->setCameraAddedHandler();
+  }
+
+  void SDK::clearCameraAddedHandler() {
+    pImpl->clearCameraAddedHandler();
+  }
+
+  void SDK::connectCamera(size_t index) {
+    pImpl->connectCamera(index);
   }
 }

@@ -6,16 +6,21 @@ namespace EOS {
   namespace Internal {
     class SDKImpl;
   }
-  class DeviceListChangedListener;
-  class DeviceConnectionStatusListener;
+  class CameraListChangedListener;
+  class CameraConnectionStatusListener;
 
   class SDK {
   public:
     SDK();
     ~SDK();
-    void registerDeviceListChangedListener(std::weak_ptr<DeviceListChangedListener> deviceListChangedListener);
-    void registerDeviceConnectionStatusListener(std::weak_ptr<DeviceConnectionStatusListener> deviceConnectionStatusListener);
+    void registerCameraListChangedListener(CameraListChangedListener *cameraListChangedListener);
+    void unregisterCameraListChangedListener(CameraListChangedListener *cameraListChangedListener);
+    void registerCameraConnectionStatusListener(CameraConnectionStatusListener *cameraConnectionStatusListener);
+    void unregisterCameraConnectionStatusListener(CameraConnectionStatusListener *cameraConnectionStatusListener);
     void refreshNotify();
+    void setCameraAddedHandler();
+    void clearCameraAddedHandler();
+    void connectCamera(size_t index);
 
   private:
     const std::unique_ptr<Internal::SDKImpl> pImpl;

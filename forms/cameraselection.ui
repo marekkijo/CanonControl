@@ -2,19 +2,11 @@
 <ui version="4.0">
  <class>CameraSelectionClass</class>
  <widget class="QDialog" name="CameraSelectionClass">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>645</width>
-    <height>408</height>
-   </rect>
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
   </property>
   <property name="windowTitle">
    <string>Camera selection</string>
-  </property>
-  <property name="modal">
-   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -44,37 +36,13 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QTableWidget" name="camerasTableWidget">
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
-       <property name="selectionMode">
-        <enum>QAbstractItemView::SingleSelection</enum>
-       </property>
-       <property name="selectionBehavior">
-        <enum>QAbstractItemView::SelectRows</enum>
-       </property>
-       <property name="showGrid">
-        <bool>false</bool>
-       </property>
-       <property name="sortingEnabled">
-        <bool>true</bool>
-       </property>
-       <property name="columnCount">
-        <number>5</number>
-       </property>
-       <attribute name="verticalHeaderVisible">
-        <bool>false</bool>
-       </attribute>
-       <column/>
-       <column/>
-       <column/>
-       <column/>
-       <column/>
-      </widget>
-     </item>
-     <item>
       <widget class="QListWidget" name="camerasListWidget">
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
@@ -84,13 +52,22 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="selectedGroupBox">
-       <property name="title">
-        <string>Selected info:</string>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <property name="spacing">
+        <number>0</number>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QGroupBox" name="selectedGroupBox">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Selected info:</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QLabel" name="indexLabel">
             <property name="text">
@@ -99,29 +76,19 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
            <widget class="QLabel" name="indexDataLabel">
             <property name="text">
              <string/>
             </property>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QLabel" name="portNameLabel">
             <property name="text">
@@ -136,10 +103,13 @@
             </property>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="Line" name="line_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QLabel" name="descriptionLabel">
             <property name="text">
@@ -154,10 +124,13 @@
             </property>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="Line" name="line_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QLabel" name="subtypeLabel">
             <property name="text">
@@ -166,29 +139,19 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
            <widget class="QLabel" name="subtypeDataLabel">
             <property name="text">
              <string/>
             </property>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="Line" name="line_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QLabel" name="reservedLabel">
             <property name="text">
@@ -197,49 +160,44 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
            <widget class="QLabel" name="reservedDataLabel">
             <property name="text">
              <string/>
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="Line" name="line_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
          </layout>
-        </item>
-       </layout>
-      </widget>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::MinimumExpanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_6">
-     <property name="spacing">
-      <number>6</number>
-     </property>
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
      <item>
       <spacer name="horizontalSpacer_5">
        <property name="orientation">
@@ -283,8 +241,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>278</x>
-     <y>253</y>
+     <x>752</x>
+     <y>264</y>
     </hint>
     <hint type="destinationlabel">
      <x>96</x>
@@ -299,8 +257,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>369</x>
-     <y>253</y>
+     <x>833</x>
+     <y>264</y>
     </hint>
     <hint type="destinationlabel">
      <x>179</x>
@@ -308,5 +266,41 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>camerasListWidget</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>CameraSelectionClass</receiver>
+   <slot>itemSelectionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>269</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>411</x>
+     <y>1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>camerasListWidget</sender>
+   <signal>itemDoubleClicked(QListWidgetItem*)</signal>
+   <receiver>CameraSelectionClass</receiver>
+   <slot>itemDoubleClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>93</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>158</x>
+     <y>17</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>itemSelectionChanged()</slot>
+  <slot>itemDoubleClicked()</slot>
+ </slots>
 </ui>
