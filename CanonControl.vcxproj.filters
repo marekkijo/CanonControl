@@ -116,6 +116,9 @@
     <ClInclude Include="src\eos\internal\cameraimpl.hpp">
       <Filter>Sources\eos\internal</Filter>
     </ClInclude>
+    <ClInclude Include="src\eos\cameraparameterchangedlistener.hpp">
+      <Filter>Sources\eos</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\cameraselection.cpp">

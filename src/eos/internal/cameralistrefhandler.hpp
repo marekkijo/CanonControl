@@ -12,8 +12,7 @@ namespace EOS {
       bool isInitialized();
 
     private:
-      EdsCameraListRef mCameraListRef;
-      bool mInitialized;
+      static EdsCameraListRef mCameraListRef;
     };
   }
 }

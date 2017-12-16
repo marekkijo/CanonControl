@@ -7,6 +7,7 @@
 namespace EOS {
   class CameraInfo;
   class Camera;
+  class CameraParameterChangedListener;
 
   namespace Internal {
     class CameraListRefHandler;
@@ -17,7 +18,7 @@ namespace EOS {
       ~CameraList();
       const std::vector<CameraInfo> &getCamerasInfo() const;
       const std::shared_ptr<Camera> &getConnectedCamera() const;
-      const std::shared_ptr<Camera> &connectCamera(std::size_t index);
+      const std::shared_ptr<Camera> &connectCamera(std::size_t index, CameraParameterChangedListener *cameraParameterChangedListener);
       void disconnectCamera(const std::shared_ptr<Camera> &connectedCamera);
       bool reassignConnectedCamera(const std::shared_ptr<CameraList> &cameraList);
 

@@ -11,6 +11,7 @@ namespace EOS {
   class Camera;
   class CameraListChangedListener;
   class CameraConnectionStatusListener;
+  class CameraParameterChangedListener;
 
   namespace Internal {
     class SDKRefHandler;
@@ -27,7 +28,7 @@ namespace EOS {
       void refreshNotify();
       void setCameraAddedHandler();
       void clearCameraAddedHandler();
-      void connectCamera(size_t index);
+      void connectCamera(size_t index, CameraParameterChangedListener *cameraParameterChangedListener);
       void disconnectCamera(const std::shared_ptr<Camera> &camera);
 
     private:
@@ -39,9 +40,9 @@ namespace EOS {
       void notifyListenersCameraListChanged(const std::vector<CameraInfo> &cameraList);
       void notifyListenersCameraConnected(const std::shared_ptr<Camera> &camera);
       void notifyListenersCameraDisconnected(const std::shared_ptr<Camera> &camera);
-      void cameraAddedHandler();
+      void handleCameraAdded();
 
-      static EdsError EDSCALLBACK cameraAddedHandler(EdsVoid *inContext);
+      static EdsError EDSCALLBACK handleCameraAdded(EdsVoid *inContext);
     };
   }
 }

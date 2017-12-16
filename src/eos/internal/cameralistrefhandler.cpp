@@ -6,16 +6,19 @@
 
 namespace EOS {
   namespace Internal {
-    CameraListRefHandler::CameraListRefHandler()
-    : mCameraListRef{nullptr}
-    , mInitialized{verifyCall(EdsGetCameraList(&mCameraListRef))} {
+    CameraListRefHandler::CameraListRefHandler() {
+      if (mCameraListRef) {
+        verifyRefCountCall(EdsRetain(mCameraListRef));
+      } else {
+        verifyCall(EdsGetCameraList(&mCameraListRef));
+      }
     }
 
     CameraListRefHandler::~CameraListRefHandler() {
-      if (mInitialized) {
-        verifyCall(EdsRelease(mCameraListRef));
+      const EdsUInt32 refCount = EdsRelease(mCameraListRef);
+      verifyRefCountCall(refCount);
+      if (refCount == 0) {
         mCameraListRef = nullptr;
-        mInitialized = false;
       }
     }
 
@@ -24,7 +27,9 @@ namespace EOS {
     }
 
     bool CameraListRefHandler::isInitialized() {
-      return mInitialized;
+      return !!mCameraListRef;
     }
+
+    EdsCameraListRef CameraListRefHandler::mCameraListRef{nullptr};
   }
 }

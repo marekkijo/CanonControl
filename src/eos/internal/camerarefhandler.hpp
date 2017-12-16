@@ -17,9 +17,8 @@ namespace EOS {
       bool isInitialized();
 
     private:
-      std::shared_ptr<CameraListRefHandler> mCameraListRefHandler;
-      EdsCameraRef mCameraRef;
-      bool mInitialized;
+      static std::shared_ptr<CameraListRefHandler> mCameraListRefHandler;
+      static EdsCameraRef mCameraRef;
     };
   }
 }

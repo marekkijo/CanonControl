@@ -38,8 +38,8 @@ namespace EOS {
     pImpl->clearCameraAddedHandler();
   }
 
-  void SDK::connectCamera(size_t index) {
-    pImpl->connectCamera(index);
+  void SDK::connectCamera(size_t index, CameraParameterChangedListener *cameraParameterChangedListener) {
+    pImpl->connectCamera(index, cameraParameterChangedListener);
   }
 
   void SDK::disconnectCamera(const std::shared_ptr<EOS::Camera> &camera) {

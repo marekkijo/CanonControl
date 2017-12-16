@@ -183,6 +183,7 @@
    <header>isospinbox.hpp</header>
   </customwidget>
  </customwidgets>
+ <resources/>
  <connections>
   <connection>
    <sender>isoSpinBox</sender>
@@ -296,8 +297,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>isoSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>CanonControlClass</receiver>
+   <slot>uiCameraPropertyChanged_isoSpeed(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>483</x>
+     <y>-2</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>connectionButtonClicked()</slot>
+  <slot>uiCameraPropertyChanged_isoSpeed(int)</slot>
  </slots>
 </ui>

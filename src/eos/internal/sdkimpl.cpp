@@ -43,11 +43,11 @@ namespace EOS {
     }
 
     void SDKImpl::refreshNotify() {
-      cameraAddedHandler();
+      handleCameraAdded();
     }
 
     void SDKImpl::setCameraAddedHandler() {
-      if (!verifyCall(EdsSetCameraAddedHandler(SDKImpl::cameraAddedHandler, this))) {
+      if (!verifyCall(EdsSetCameraAddedHandler(SDKImpl::handleCameraAdded, this))) {
         throw InitializationException();
       }
     }
@@ -58,19 +58,20 @@ namespace EOS {
       }
     }
 
-    void SDKImpl::connectCamera(size_t index) {
+    void SDKImpl::connectCamera(size_t index, CameraParameterChangedListener *cameraParameterChangedListener) {
       if (mCameraList->getConnectedCamera()) {
         notifyListenersCameraDisconnected(mCameraList->getConnectedCamera());
       }
 
-      notifyListenersCameraConnected(mCameraList->connectCamera(index));
+      notifyListenersCameraConnected(mCameraList->connectCamera(index, cameraParameterChangedListener));
     }
 
     void SDKImpl::disconnectCamera(const std::shared_ptr<Camera> &camera) {
       if (mCameraList->getConnectedCamera() == camera) {
         mCameraList->disconnectCamera(camera);
-        mCameraList.reset();
         notifyListenersCameraDisconnected(camera);
+        notifyListenersCameraListChanged(std::vector<CameraInfo>{});
+        mCameraList.reset();
       } else {
         notifyListenersCameraConnected(camera);
       }
@@ -94,7 +95,7 @@ namespace EOS {
       }
     }
 
-    void SDKImpl::cameraAddedHandler() {
+    void SDKImpl::handleCameraAdded() {
       const std::shared_ptr<CameraList> newCameraList{std::make_shared<CameraList>()};
       if (!mCameraList){
         mCameraList = newCameraList;
@@ -113,9 +114,9 @@ namespace EOS {
       }
     }
 
-    EdsError SDKImpl::cameraAddedHandler(EdsVoid *inContext) {
+    EdsError SDKImpl::handleCameraAdded(EdsVoid *inContext) {
       SDKImpl *impl = static_cast<SDKImpl *>(inContext);
-      impl->cameraAddedHandler();
+      impl->handleCameraAdded();
       return EDS_ERR_OK;
     }
   }

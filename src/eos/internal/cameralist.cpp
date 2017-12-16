@@ -33,12 +33,12 @@ namespace EOS {
       return mConnectedCamera;
     }
 
-    const std::shared_ptr<Camera> &CameraList::connectCamera(std::size_t index) {
+    const std::shared_ptr<Camera> &CameraList::connectCamera(std::size_t index, CameraParameterChangedListener *cameraParameterChangedListener) {
       if (mConnectedCamera) {
         disconnectCamera(mConnectedCamera);
       }
 
-      const std::shared_ptr<CameraImpl> connectedCameraImpl{std::make_shared<CameraImpl>(mCameraListRefHandler, index, mCamerasInfo[index])};
+      const std::shared_ptr<CameraImpl> connectedCameraImpl{std::make_shared<CameraImpl>(mCameraListRefHandler, index, cameraParameterChangedListener, mCamerasInfo[index])};
       if (connectedCameraImpl->isInitialized()) {
         return mConnectedCamera = connectedCameraImpl;
       }

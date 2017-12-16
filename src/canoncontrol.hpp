@@ -3,9 +3,12 @@
 #include <vector>
 #include <memory>
 
+#include <optional>
+
 #include <QtWidgets/QMainWindow>
 
 #include "eos/cameraconnectionstatuslistener.hpp"
+#include "eos/cameraparameterchangedlistener.hpp"
 
 namespace Ui {
   class CanonControlClass;
@@ -20,7 +23,8 @@ namespace EOS {
 }
 
 class CanonControl : public QMainWindow
-                   , public EOS::CameraConnectionStatusListener {
+                   , public EOS::CameraConnectionStatusListener
+                   , public EOS::CameraParameterChangedListener {
   Q_OBJECT
 
 public:
@@ -32,16 +36,31 @@ public: // EOS::CameraConnectionStatusListener
   void cameraConnected(const std::shared_ptr<EOS::Camera> &camera) override;
   void cameraDisconnected(const std::shared_ptr<EOS::Camera> &camera) override;
 
+public: // EOS::CameraParameterChangedListener
+  void cameraPropertyUpdate_isoSpeed(std::uint32_t value) override;
+
 private:
+  struct CameraPropertiesUpdateSet {
+    template<typename PropertyType>
+    struct Set {
+      std::optional<PropertyType> value;
+      bool sent;
+    };
+
+    Set<std::uint32_t> isoSpeed;
+  };
+
   const std::unique_ptr<Ui::CanonControlClass> mUi;
-  const std::unique_ptr<QTimer> mRefreshTimer;
+  std::unique_ptr<QTimer> mRefreshTimer;
   std::unique_ptr<CameraSelection> mCameraSelection;
   std::shared_ptr<EOS::SDK> mSDK;
   std::shared_ptr<EOS::Camera> mConnectedCamera;
+  CameraPropertiesUpdateSet mCameraPropertiesUpdateSet;
 
   void cameraConnectionUiUpdate();
 
 public slots:
   void refreshNotify();
   void connectionButtonClicked();
+  void uiCameraPropertyChanged_isoSpeed(int value);
 };

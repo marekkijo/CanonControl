@@ -337,5 +337,9 @@ namespace EOS {
         return false;
       }
     }
+
+    bool verifyRefCountCall(EdsUInt32 result) {
+      return result != 0xFFFFFFFF;
+    }
   }
 }

@@ -9,5 +9,6 @@ namespace EOS {
     std::string errorToString(EdsError error);
     EdsError getLastError();
     bool verifyCall(EdsError error);
+    bool verifyRefCountCall(EdsUInt32 result);
   }
 }
